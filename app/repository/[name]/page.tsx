@@ -13,7 +13,7 @@ export default async function Repository({ params }: any) {
       <p className="text-2xl font-bold">{name}</p>
       <p className="text-lg font-bold">Commit History:</p>
       {commits.map(({ sha, commit, author }: any) => (
-        <div className="bg-white hover:shadow-md p-4 rounded-md">
+        <div key={sha} className="bg-white hover:shadow-md p-4 rounded-md">
           <p className="text-gray-500">{sha}</p>
           <div className="flex">
             <p className="text-md text-gray-500">Message:</p>
