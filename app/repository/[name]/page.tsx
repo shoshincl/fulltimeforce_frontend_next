@@ -1,16 +1,24 @@
 import moment from "moment";
 
 const getCommits = (name: string) =>
-  fetch(`${process.env.API_BASE_URL}/repository/${name}`).then((res) =>
-    res.json()
-  );
+  fetch(`${process.env.API_BASE_URL}/repository/${name}`, {
+    next: { revalidate: 10 },
+  }).then((res) => res.json());
 
 export default async function Repository({ params }: any) {
   const { name } = params;
   const commits = await getCommits(name);
   return (
     <main className="grid grid-cols-1 gap-4 min-h-screen flex-col items-center p-24">
-      <p className="text-2xl font-bold">{name}</p>
+      <div>
+        <p className="text-2xl font-bold">{name}</p>
+        <a
+          href={`https://www.github.com/shoshincl/${name}`}
+          className="hover:underline"
+        >
+          View on Github
+        </a>
+      </div>
       <p className="text-lg font-bold">Commit History:</p>
       {commits.map(({ sha, commit, author }: any) => (
         <div key={sha} className="bg-white hover:shadow-md p-4 rounded-md">

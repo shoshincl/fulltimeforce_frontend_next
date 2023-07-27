@@ -3,7 +3,9 @@ import Repositories from "./components/Repositories";
 import Loading from "./components/loading";
 
 const getRepositories = () =>
-  fetch(`${process.env.API_BASE_URL}/repositories`).then((res) => res.json());
+  fetch(`${process.env.API_BASE_URL}/repositories`, {
+    next: { revalidate: 10 },
+  }).then((res) => res.json());
 
 export default async function Home() {
   const repos = await getRepositories();
